@@ -1,3 +1,5 @@
+## Continually updated
+
 ## Usage Instructions
 
 1. Rename .env.example to .env by removing the .example suffix.
