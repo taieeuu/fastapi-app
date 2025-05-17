@@ -1,4 +1,5 @@
-from pydantic import BaseModel
+from dataclasses import dataclass
 
-class ExampleRequest(BaseModel):
+@dataclass
+class ExampleRequest():
     code: str 

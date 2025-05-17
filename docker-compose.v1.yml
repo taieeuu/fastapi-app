@@ -2,12 +2,11 @@ services:
     backend_v1:
         build:
             context: .
-            platforms:
-                - linux/amd64
         image: backend_v1:latest
         container_name: backend_v1
         restart: always
         env_file: .env
+        platform: linux/arm64
         ports:
             - "8080:8080"
         volumes:
@@ -16,7 +15,37 @@ services:
         networks:
             app-network:
                 ipv4_address: 10.170.2.152
+    celery_worker:
+        build:
+            context: .
+        image: backend_v1:latest
+        container_name: celery_worker
+        restart: always
+        env_file: .env
+        volumes:
+            - .:/app
+        command: celery -A app.tasks worker --loglevel=info --concurrency=1
+        platform: linux/arm64
+        networks:
+            app-network:
+                ipv4_address: 10.170.2.154
 
+    celery_beat:
+        build:
+            context: .
+        image: backend_v1:latest
+        container_name: celery_beat
+        restart: always
+        env_file: .env
+        volumes:
+            - .:/app
+        command: celery -A app.tasks beat --loglevel=info
+        platform: linux/arm64
+        environment:
+            - REDIS_PWD=${REDIS_PWD}
+        networks:
+            app-network:
+                ipv4_address: 10.170.2.155
 networks:
     app-network:
         external: true

@@ -2,23 +2,26 @@ FROM python:3.10.12-slim-buster
 
 WORKDIR /app
 
+RUN apt-get update --yes --quiet \
+ && apt-get install --yes --quiet --no-install-recommends \
+      build-essential \
+      unixodbc \
+      unixodbc-dev \
+      logrotate \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir --upgrade pip \
+ && pip install --no-cache-dir uvicorn
+
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r requirements.txt
+
 COPY . /app
 
-# 更新並安裝必要套件
-RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends \
-    unixodbc \
-    unixodbc-dev \
-    logrotate \
-    && rm -rf /var/lib/apt/lists/*
+COPY app/db/odbc_driver/ibm-iaccess-1.1.0.28-1.0.amd64.deb /app/
+RUN dpkg -i /app/ibm-iaccess-1.1.0.28-1.0.amd64.deb || true
 
-RUN apt-get install -y logrotate
+COPY app/db/odbc_driver/odbcinst.ini /etc/
+RUN rm -f /app/ibm-iaccess-1.1.0.28-1.0.amd64.deb
 
-RUN pip install --upgrade pip
-
-RUN pip3 install poetry
-RUN poetry config virtualenvs.create false
-RUN poetry install -n --no-ansi
-
-COPY ./app/db/odbc_driver/ibm-iaccess-1.1.0.28-1.0.amd64.deb /app
-RUN dpkg -i /app/ibm-iaccess-1.1.0.28-1.0.amd64.deb; exit 0
-COPY ./app/db/odbc_driver/odbcinst.ini /etc
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

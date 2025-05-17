@@ -45,3 +45,11 @@ update_env:
 .PHONY: unit_test
 unit_test:
 	$(PYTEST) tests/da_app/unit/ ${CODECOV_OPTS}
+
+.PHONY: install
+install:
+	uv pip install -r requirements.txt
+
+.PHONY: pip-compile
+pip-compile:
+	pip-compile requirements.in

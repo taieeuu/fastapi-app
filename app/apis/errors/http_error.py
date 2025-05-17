@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from starlette.requests import Request
 from starlette.responses import JSONResponse
-from app.api.return_code import Return_Code
+from app.apis.return_code import Return_Code
 from app.core.log_config import logger
 import logging
 

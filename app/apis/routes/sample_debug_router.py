@@ -1,37 +1,13 @@
-from fastapi import FastAPI, HTTPException, Request, APIRouter, Query
-from fastapi.responses import JSONResponse, HTMLResponse
+from fastapi import HTTPException, APIRouter
+from fastapi.responses import JSONResponse
 from app.core.config import get_app_settings
-from app.db.connect_to_mdc import connect_with_pymongo
-from app.api.func.sample_api_func import *
-from app.core.api_config import *
-from app.api.routes.utils import *
 from app.db.connect_to_redis import get_redis_client
-import plotly.io as pio
-import plotly.graph_objs as go
-from plotly.subplots import make_subplots
-import pandas as pd
 from app.core.log_config import logger
 import logging
 from app.models.example_model import ExampleRequest
 
 router = APIRouter()
 redis_client = get_redis_client()
-
-@router.get("/whose_api")
-@timeit
-async def whose_api(
-    code: str = Query(..., description="code"),
-):
-    response = {code: f"code_{code}"}
-
-    redis_cache = redis_client.get(code)
-
-    if redis_cache:
-        return JSONResponse(content=json.loads(redis_cache))
-
-    store_response_in_redis(code, response, redis_client)
-
-    return response
 
 @router.get("/debug/http_error")
 async def http_error_test():

@@ -3,11 +3,11 @@ from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException
 from starlette.middleware.cors import CORSMiddleware
 
-from app.api.errors.value_error import value_error_handler
-from app.api.errors.http_error import http_error_handler
-from app.api.errors.validation_error import http422_error_handler
+from app.apis.errors.value_error import value_error_handler
+from app.apis.errors.http_error import http_error_handler
+from app.apis.errors.validation_error import http422_error_handler
 
-from app.api.routes.api import router as api_router
+from app.apis.apis import router as api_router
 from app.core.config import get_app_settings
 # from app.core.events import create_start_app_handler, create_stop_app_handler
 from app.core.config import *
@@ -41,8 +41,7 @@ def get_application() -> FastAPI:
         "shutdown",
         create_stop_app_handler(application),
     )
-    application.add_event_handler("startup", create_start_app_handler(application, settings))
-    application.add_event_handler("shutdown", create_stop_app_handler(application))
+
     application.include_router(api_router, prefix=settings.api_prefix)
 
 

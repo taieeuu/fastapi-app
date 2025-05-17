@@ -7,7 +7,12 @@ services:
         ports:
             - "6379:6379"
         env_file: .env
-        entrypoint: redis-server --requirepass ${REDIS_PWD}
+        volumes:
+            - ./redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
+            - ./redis/data:/var/lib/redis-stack
+            - ./redis/logs:/var/log/redis
+            - ./redis/redis_start.sh:/usr/local/bin/redis_start.sh:ro
+        entrypoint: [ "sh", "/usr/local/bin/redis_start.sh" ]
         networks:
             app-network:
                 ipv4_address: 10.170.2.150
