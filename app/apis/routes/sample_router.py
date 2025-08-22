@@ -34,7 +34,7 @@ async def get_sample_data(
     try:
         logger.info(f"@@@ search_sample_data request {request.pagination=}")
         params = Params(page=request.pagination.page, size=request.pagination.size)
-        res = sample_service.get_sample_data(request.msg, params)
+        res = await sample_service.get_sample_data(request.search_parameter, params)
         return ApiResponse[SampleDataResponse](
             return_code=100,
             message=Return_Code[100],

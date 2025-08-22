@@ -1,9 +1,8 @@
 services:
-    backend_v2:
+    backend_v2:        
         build:
             context: .
-            platforms:
-                - linux/amd64
+        platform: linux/amd64
         image: backend_v2:latest
         container_name: backend_v2
         restart: always

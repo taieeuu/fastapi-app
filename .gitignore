@@ -1,14 +1,37 @@
-.log/
-**/__pycache__
+# Python cache
+**/__pycache__/
+*.py[cod]
+*.pyo
+
+# Test coverage
 /htmlcov/
 .coverage
-./.vscode/
-/.pytest_cache
+.pytest_cache/
+
+# Editor and environment
+.vscode/
 .env
-/dist
+.DS_Store
+
+# Build artifacts
+/build/
+/dist/
+/*.egg-info
+
+# Excel files
 **.xlsx
+
+# Ignore logs and runtime files
+*.log
+*.pid
+
+# Celery specific
+celerybeat-schedule
+celerybeat.pid
+celery.log
+
+# Project-specific folders/files
+.log/
 da_need/
 sample/
 return_code_sample.py
-/build
-.DS_Store

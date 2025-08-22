@@ -1,7 +1,6 @@
 import time
 import pytz
 import json
-from app.core.api_config import *
 from datetime import datetime, timedelta
 from functools import wraps
 from app.core.log_config import logger

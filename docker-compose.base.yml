@@ -1,6 +1,6 @@
 services:
     redis:
-        image: "redis"
+        image: redis/redis-stack-server:latest
         platform: linux/amd64
         container_name: redis
         restart: always

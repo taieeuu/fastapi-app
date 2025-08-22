@@ -14,7 +14,7 @@ class PageResponse(BaseModel):
     pages: int = Field(0, description="pages")
 
 class SampleDataRequest(BaseModel):
-    msg: str = Field("", description="msg")
+    search_parameter: str = Field("", description="search_parameter")
     page: int = Field(1, description="now page")
     size: int = Field(20, description="page size")
 

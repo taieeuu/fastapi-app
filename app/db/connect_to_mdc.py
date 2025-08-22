@@ -17,9 +17,9 @@ def connect_init():
 def to_mdc_prod():
     user, pwd, host, port, db = connect_init()
     connect(
-        db = {db},
-        username = {user},
-        password = {pwd},
+        db = db,
+        username = user,
+        password = pwd,
         host = f'mongodb://{user}:{pwd}@{host}:{port}/?authSource={db}'
     )
 

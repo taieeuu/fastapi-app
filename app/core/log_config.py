@@ -38,18 +38,6 @@ class Logger:
 
     def get_logger(self):
         return self.logger
-    
-# def logging_setting():
-#     if LOGGING_LEVEL == 1:
-#         logging.basicConfig(level=logging.ERROR)
-#     elif LOGGING_LEVEL == 2:
-#         logging.basicConfig(level=logging.WARNING)
-#     elif LOGGING_LEVEL == 3:
-#         logging.basicConfig(level=logging.INFO)
-#     elif LOGGING_LEVEL == 4:
-#         logging.basicConfig(level=logging.DEBUG)
-#     else:
-#         logging.basicConfig(level=logging.DEBUG)
 
 logger_instance = Logger()
 logger = logger_instance.get_logger()
